@@ -1,5 +1,5 @@
 const express = require('express');
-const { loginUser, createUser, getUsers } = require('./controller/user.controller');
+const { loginUser, createUser, getUsers, getUserById } = require('./controller/user.controller');
 const { validInputs } = require('./middlewares/validateLoginInputs');
 const validateBody = require('./middlewares/validateCreateUserBody');
 const validateToken = require('./middlewares/validateToken');
@@ -10,6 +10,8 @@ const validateToken = require('./middlewares/validateToken');
 const app = express();
 
 app.use(express.json());
+
+app.get('/user/:id', validateToken, getUserById);
 
 app.get('/user', validateToken, getUsers);
 
