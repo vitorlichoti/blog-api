@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { getUserByEmail, create } = require('../service/user.service');
+const { getUserByEmail, create, findAllUsers } = require('../service/user.service');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
@@ -36,7 +36,16 @@ const createUser = async (req, res) => {
   }
 };
 
+const getUsers = async (_req, res) => {
+  const users = await findAllUsers();
+
+  if (users.length <= 0) return res.status(404).json({ message: 'Usuários não encontrados' });
+
+  return res.status(200).json(users);
+};
+
 module.exports = {
   loginUser,
   createUser,
+  getUsers,
 };
