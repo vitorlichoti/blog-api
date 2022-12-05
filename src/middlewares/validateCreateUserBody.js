@@ -1,19 +1,3 @@
-// const Joi = require('joi');
-
-// const validateBody = (body) => {
-//   Joi.object({
-//     displayName: Joi.string().min(8).alphanum().required()
-// .messages({
-//       'string.min': '"displayName" length must be at least 8 characters long',
-//       'string.required': '"username" is required',
-//     }),
-//     password: Joi.string().min(5).required().messages({
-//       'string.min': '"password" length must be 5 characters long',
-//       'string.required': '"password" is required',
-//     }),
-//   }).validate(body);
-// };
-
 const re = /\S+@\S+\.\S+/;
 
 const validateBody = (req, res, next) => {
