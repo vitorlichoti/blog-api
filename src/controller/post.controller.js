@@ -9,8 +9,7 @@ const createPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
 
   const { data: { userId } } = jwt.verify(token, secret);
-  
-  try {
+
     const post = await create(title, content, userId);
     const lastPost = await findLastPostId();
     const postId = lastPost[0].dataValues.id;
@@ -23,9 +22,6 @@ const createPost = async (req, res) => {
       content: post.content,
       userId: post.userId,
     });
-  } catch (e) {
-    return res.status(500).json({ message: e });
-  }
 };
 
 module.exports = {
