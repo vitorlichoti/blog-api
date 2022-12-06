@@ -7,7 +7,7 @@ const validateToken = require('./middlewares/validateToken');
 const validateName = require('./middlewares/validateNameCategory');
 const validatePostFields = require('./middlewares/validatePostFields');
 const validadeCategoriesIfExist = require('./middlewares/validadeIfExistsCategories');
-const { createPost } = require('./controller/post.controller');
+const { createPost, getUserPosts } = require('./controller/post.controller');
 // const validateEmail = require('./middlewares/validadeEmail');
 
 // ...
@@ -21,6 +21,8 @@ app.get('/user/:id', validateToken, getUserById);
 app.get('/user', validateToken, getUsers);
 
 app.get('/categories', validateToken, getAllCategories);
+
+app.get('/post', validateToken, getUserPosts);
 
 app.post('/login', validInputs, loginUser);
 

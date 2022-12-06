@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { PostCategory } = require('../models');
-const { create, findLastPostId } = require('../service/post.service');
+const { create, findLastPostId, findPostsUser } = require('../service/post.service');
+
+const getUserIdtoken = require('../middlewares/getUserIdToken');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
@@ -24,6 +26,19 @@ const createPost = async (req, res) => {
     });
 };
 
+const getUserPosts = async (req, res) => {
+  const token = req.header('Authorization');
+
+  const { data: { userId } } = getUserIdtoken(token);
+
+  const userPosts = await findPostsUser(userId);
+
+  if (!userPosts) return res.status(404).json({ message: 'Posts not found' });
+
+  return res.status(200).json(userPosts);
+};
+
 module.exports = {
   createPost,
+  getUserPosts,
 };
