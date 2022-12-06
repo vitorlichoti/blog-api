@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { PostCategory } = require('../models');
-const { create, findLastPostId, findPostsUser } = require('../service/post.service');
+const { create, findLastPostId, findPostsUser, findPostById } = require('../service/post.service');
 
 const getUserIdtoken = require('../middlewares/getUserIdToken');
 
@@ -38,7 +38,20 @@ const getUserPosts = async (req, res) => {
   return res.status(200).json(userPosts);
 };
 
+const getPostById = async (req, res) => {
+  const { id } = req.params;
+
+  const post = await findPostById(Number(id));
+
+  if (!post) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  }
+
+  return res.status(200).json(post);
+};
+
 module.exports = {
   createPost,
   getUserPosts,
+  getPostById,
 };

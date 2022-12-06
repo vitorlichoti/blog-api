@@ -28,8 +28,27 @@ const findPostsUser = (id) => BlogPost.findAll({
   where: { userId: id },
 });
 
+const findPostById = (id) => BlogPost.findOne({
+  include: [{
+        model: User,
+        as: 'user',
+        attributes: {
+          exclude: ['password'],
+        },
+      },
+    {
+      model: Category,
+      as: 'categories',
+      attributes: {
+        exclude: 'PostCategory',
+      },
+    }],
+  where: { id },
+});
+
 module.exports = {
   create,
   findLastPostId,
   findPostsUser,
+  findPostById,
 };

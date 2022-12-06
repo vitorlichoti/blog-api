@@ -7,7 +7,7 @@ const validateToken = require('./middlewares/validateToken');
 const validateName = require('./middlewares/validateNameCategory');
 const validatePostFields = require('./middlewares/validatePostFields');
 const validadeCategoriesIfExist = require('./middlewares/validadeIfExistsCategories');
-const { createPost, getUserPosts } = require('./controller/post.controller');
+const { createPost, getUserPosts, getPostById } = require('./controller/post.controller');
 // const validateEmail = require('./middlewares/validadeEmail');
 
 // ...
@@ -17,6 +17,8 @@ const app = express();
 app.use(express.json());
 
 app.get('/user/:id', validateToken, getUserById);
+
+app.get('/post/:id', validateToken, getPostById);
 
 app.get('/user', validateToken, getUsers);
 
