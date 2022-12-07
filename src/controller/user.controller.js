@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { getUserByEmail, create, findAllUsers, findUserById } = require('../service/user.service');
+const { getUserByEmail, create,
+  findAllUsers, findUserById, remove } = require('../service/user.service');
+const getUserIdToken = require('../middlewares/getUserIdToken');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
@@ -54,9 +56,20 @@ const getUserById = async (req, res) => {
   return res.status(404).json({ message: 'User does not exist' });
 };
 
+const removeUser = async (req, res) => {
+  const token = req.header('Authorization');
+
+  const { data: { userId } } = getUserIdToken(token);
+
+  await remove(userId);
+
+  return res.status(204).json();
+};
+
 module.exports = {
   loginUser,
   createUser,
   getUsers,
   getUserById,
+  removeUser,
 };
