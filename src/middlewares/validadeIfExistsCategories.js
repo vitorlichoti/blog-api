@@ -7,7 +7,7 @@ const validadeCategoriesIfExist = async (req, res, next) => {
   const existentIds = result.every((e, i) => e.dataValues.id === categoryIds[i]);
 
   if (!existentIds) {
-    res.status(400).json({ message: 'one or more "categoryIds" not found' });
+    return res.status(400).json({ message: 'one or more "categoryIds" not found' });
   }
 
   next();
