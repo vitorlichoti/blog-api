@@ -9,7 +9,7 @@ const validateName = require('./middlewares/validateNameCategory');
 const validatePostFields = require('./middlewares/validatePostFields');
 const validadeCategoriesIfExist = require('./middlewares/validadeIfExistsCategories');
 const { createPost, getUserPosts,
-  getPostById, updatePostId, removePost } = require('./controller/post.controller');
+  getPostById, updatePostId, removePost, getPostByQuery } = require('./controller/post.controller');
 const validateUserAuthorization = require('./middlewares/validateUserAuthorization');
 const validateUpdateFields = require('./middlewares/validateUpdateInputs');
 const validateIsAuthorizateUser = require('./middlewares/validateIsAuthorizateUser');
@@ -20,6 +20,8 @@ const validateIsAuthorizateUser = require('./middlewares/validateIsAuthorizateUs
 const app = express();
 
 app.use(express.json());
+
+app.get('/post/search', validateToken, getPostByQuery);
 
 app.get('/user/:id', validateToken, getUserById);
 
