@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { PostCategory } = require('../models');
-const { create, findLastPostId, findPostsUser, findPostById } = require('../service/post.service');
+const { create, findLastPostId,
+  findPostsUser, findPostById, updatePost } = require('../service/post.service');
 
 const getUserIdtoken = require('../middlewares/getUserIdToken');
 
@@ -50,8 +51,20 @@ const getPostById = async (req, res) => {
   return res.status(200).json(post);
 };
 
+const updatePostId = async (req, res) => {
+  const { id } = req.params;
+
+  const { title, content } = req.body;
+
+  await updatePost(Number(id), title, content);
+  const updatedPost = await findPostById(id);
+
+  return res.status(200).json(updatedPost);
+};
+
 module.exports = {
   createPost,
   getUserPosts,
   getPostById,
+  updatePostId,
 };

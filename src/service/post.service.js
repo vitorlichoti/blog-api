@@ -46,9 +46,16 @@ const findPostById = (id) => BlogPost.findOne({
   where: { id },
 });
 
+const updatePost = (id, title, content) => BlogPost.update({
+  title,
+  content,
+  updated: Date.now(),
+}, { where: { id } });
+
 module.exports = {
   create,
   findLastPostId,
   findPostsUser,
   findPostById,
+  updatePost,
 };
