@@ -52,10 +52,19 @@ const updatePost = (id, title, content) => BlogPost.update({
   updated: Date.now(),
 }, { where: { id } });
 
+const remove = async (id) => {
+  const removed = await BlogPost.destroy(
+    { where: { id } },
+  );
+
+  return removed;
+};
+
 module.exports = {
   create,
   findLastPostId,
   findPostsUser,
   findPostById,
   updatePost,
+  remove,
 };

@@ -8,9 +8,10 @@ const validateName = require('./middlewares/validateNameCategory');
 const validatePostFields = require('./middlewares/validatePostFields');
 const validadeCategoriesIfExist = require('./middlewares/validadeIfExistsCategories');
 const { createPost, getUserPosts,
-  getPostById, updatePostId } = require('./controller/post.controller');
+  getPostById, updatePostId, removePost } = require('./controller/post.controller');
 const validateUserAuthorization = require('./middlewares/validateUserAuthorization');
 const validateUpdateFields = require('./middlewares/validateUpdateInputs');
+const validateIsAuthorizateUser = require('./middlewares/validateIsAuthorizateUser');
 // const validateEmail = require('./middlewares/validadeEmail');
 
 // ...
@@ -38,6 +39,8 @@ app.post('/user', validateBody, createUser);
 app.post('/categories', validateToken, validateName, createCategorie);
 
 app.post('/post', validateToken, validatePostFields, validadeCategoriesIfExist, createPost);
+
+app.delete('/post/:id', validateToken, validateIsAuthorizateUser, removePost);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
