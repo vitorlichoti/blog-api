@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { PostCategory } = require('../models');
-const { create, findLastPostId,
+const { create, findLastPostId, deletePost,
   findPostsUser, findPostById, updatePost } = require('../service/post.service');
 
 const getUserIdtoken = require('../middlewares/getUserIdToken');
@@ -62,9 +62,22 @@ const updatePostId = async (req, res) => {
   return res.status(200).json(updatedPost);
 };
 
+const removePost = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await deletePost(Number(id));
+
+    return res.status(204).json();
+  } catch (_e) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  }
+};
+
 module.exports = {
   createPost,
   getUserPosts,
   getPostById,
   updatePostId,
+  removePost,
 };

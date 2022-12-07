@@ -11,6 +11,7 @@ const { createPost, getUserPosts,
   getPostById, updatePostId } = require('./controller/post.controller');
 const validateUserAuthorization = require('./middlewares/validateUserAuthorization');
 const validateUpdateFields = require('./middlewares/validateUpdateInputs');
+const { deletePost } = require('./service/post.service');
 // const validateEmail = require('./middlewares/validadeEmail');
 
 // ...
@@ -24,6 +25,8 @@ app.get('/user/:id', validateToken, getUserById);
 app.get('/post/:id', validateToken, getPostById);
 
 app.put('/post/:id', validateToken, validateUserAuthorization, validateUpdateFields, updatePostId);
+
+app.delete('/post/:id', validateToken, deletePost);
 
 app.get('/user', validateToken, getUsers);
 

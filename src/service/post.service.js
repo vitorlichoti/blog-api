@@ -52,10 +52,14 @@ const updatePost = (id, title, content) => BlogPost.update({
   updated: Date.now(),
 }, { where: { id } });
 
+const deletePost = (postId) => BlogPost.destroy({
+  truncate: { cascade: true }, where: postId });
+
 module.exports = {
   create,
   findLastPostId,
   findPostsUser,
   findPostById,
   updatePost,
+  deletePost,
 };
